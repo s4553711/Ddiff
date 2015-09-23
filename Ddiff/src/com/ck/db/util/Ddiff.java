@@ -17,7 +17,8 @@ public class Ddiff {
         this.db2 = input2;
     }
     
-    public void findDiff() {
+    public boolean findDiff() {
+    	boolean result = false;
     	List<DBSchema> schemaOfdb1 = getSchemas(this.db1);
     	List<DBSchema> schemaOfdb2 = getSchemas(this.db2);
     	
@@ -26,6 +27,7 @@ public class Ddiff {
     	Collection<DBSchema> diffDB = SetOperator.diffCompared(schemaOfdb1, schemaOfdb2);
     	for(DBSchema db : diffDB) {
     		System.out.println("Diff in table > name: "+db.getName());
+    		result = true;
     	}
     	
     	for(DBSchema db : SetOperator.getIntersection(schemaOfdb1, schemaOfdb2)) {
@@ -33,8 +35,10 @@ public class Ddiff {
     		int index2 = schemaOfdb2.indexOf(db);
     		for ( ColInfo col : SetOperator.diffCompared(schemaOfdb1.get(index1).getCols(), schemaOfdb2.get(index2).getCols())) {
     			System.out.println("Diff in Col > table: "+db.getName()+", column name: "+col.getName()+" , column type: "+col.getType());
+    			result = true;
     		}
     	}
+    	return result;
     }
     
     private List<DBSchema> getSchemas(String input) {
