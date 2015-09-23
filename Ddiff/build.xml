@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hipipe" basedir="." default="build">
+	
+	
+	<target name="clean">
+		<delete dir="${classes.dir}" failonerror="false"/>
+	</target>
+	
+	<target name="init">
+		<property name="src.dir" location="src"/>
+		<property name="classes.dir" location="bin"/>
+		<property name="lib.dir" location="lib"/>
+		<path id="compile.classpath">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</path>
+	</target>
+	
+	<target name="compile">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+	
+	<target name="jar">
+		<jar destfile="Ddiff.jar">
+			<manifest>
+				<attribute name="Built-by" value="s4553711"/>
+				<attribute name="Manifest-Version" value="1.0"/>
+				<attribute name="Main-Class" value="com.ck.db.util.Runner"/>
+			</manifest>
+			<fileset dir="${classes.dir}"/>
+			<zipgroupfileset dir="${lib.dir}" />
+		</jar>
+	</target>
+	
+	<target name="build" depends="init, clean, compile, jar" />
+</project>
