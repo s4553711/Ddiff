@@ -6,6 +6,7 @@ public class CustomTask {
 	
 	private String schemaA;
 	private String schemaB;
+	private boolean quiet = false;
 
 	public void setSchemaA(String name) {
 		this.schemaA = name;
@@ -15,11 +16,15 @@ public class CustomTask {
 		this.schemaB = name;
 	}
 	
+	public void setQuiet(boolean bool) {
+		this.quiet  = bool;
+	}
+	
 	public void execute() {
 		System.out.println("Hello Custom");
 		Ddiff compare = new Ddiff(this.schemaA, this.schemaB);
         boolean findDiff= compare.findDiff();
-        if (findDiff) {
+        if (!quiet && findDiff) {
         	throw new BuildException("Find difference of these two databases.");
         }
 	}

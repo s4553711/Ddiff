@@ -38,7 +38,7 @@
 	
 	<target name="compareDB">
 		<taskdef name="compare" classname="com.ck.db.util.CustomTask" classpath="Ddiff.jar"/>
-		<compare schemaA="/gfs/of5/hipipe/data/999999/test.node.sql" schemaB="/gfs/of5/hipipe/data/999999/test.offical.sql"/>
+		<compare quiet="true" schemaA="/gfs/of5/hipipe/data/999999/test.node.sql" schemaB="/gfs/of5/hipipe/data/999999/test.offical.sql"/>
 	</target>
 	
 	<target name="build" depends="init, clean, compile, jar" />
