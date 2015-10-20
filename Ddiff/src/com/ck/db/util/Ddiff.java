@@ -63,6 +63,10 @@ public class Ddiff {
         			canRead = false;
         			canReadFK = false;
         			continue;
+        		} else if (line.startsWith("Foreign-key constraints:")) {
+        			canReadFK = true;
+        			canRead = false;
+        			continue;
         		} else if(canRead) {
         			String[] cols = line.split("\\|");
         			if (!cols[0].trim().equals("Column")) {
@@ -74,9 +78,6 @@ public class Ddiff {
         			}
         		} else if(canReadFK && !line.trim().equals("")) {
         			schema.addFK(line.trim());
-        		} else if (line.startsWith("Foreign-key constraints:")) {
-        			canReadFK = true;
-        			continue;
         		}
         	}
         	
